@@ -1,264 +1,1314 @@
 {
   "title": "Claude Cowork Monitoring",
-  "tags": ["claude", "cowork", "opentelemetry"],
+  "tags": [
+    "claude",
+    "cowork",
+    "opentelemetry"
+  ],
   "timezone": "browser",
   "refresh": "1m",
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "panels": [
     {
       "type": "row",
       "title": "Overview",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "collapsed": false
     },
     {
       "type": "stat",
       "title": "Total API Requests",
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
-        "refId": "A"
-      }],
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["sum"] } },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      },
       "fieldConfig": {
-        "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "blue", "value": null }] } }
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          }
+        }
       }
     },
     {
       "type": "stat",
       "title": "Total Cost (USD)",
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
-        "refId": "A"
-      }],
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["sum"] } },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "currencyUSD",
           "decimals": 2,
-          "color": { "mode": "thresholds" },
-          "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "orange", "value": 10 }, { "color": "red", "value": 50 }] }
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 50
+              }
+            ]
+          }
         }
       }
     },
     {
       "type": "stat",
       "title": "Total Prompts",
-      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [$__auto]))",
-        "refId": "A"
-      }],
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["sum"] } },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [$__auto]))",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      },
       "fieldConfig": {
-        "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "purple", "value": null }] } }
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          }
+        }
       }
     },
     {
       "type": "stat",
       "title": "Error Count",
-      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_error` [$__auto]))",
-        "refId": "A"
-      }],
-      "options": { "colorMode": "background", "graphMode": "none", "textMode": "value", "reduceOptions": { "calcs": ["sum"] } },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_error` [$__auto]))",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "textMode": "value",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ]
+        }
+      },
       "fieldConfig": {
-        "defaults": { "color": { "mode": "thresholds" }, "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 1 }] } }
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        }
       }
     },
     {
       "type": "row",
       "title": "User Activity",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "collapsed": false
     },
     {
       "type": "timeseries",
       "title": "API Requests by User",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
-        "legendFormat": "{{user_email}}",
-        "refId": "A"
-      }],
-      "options": { "tooltip": { "mode": "multi" } },
-      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } } } }
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [1d]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 20,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
     },
     {
       "type": "timeseries",
       "title": "Cost by User",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 6 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum by (user_email) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
-        "legendFormat": "{{user_email}}",
-        "refId": "A"
-      }],
-      "options": { "tooltip": { "mode": "multi" } },
-      "fieldConfig": { "defaults": { "unit": "currencyUSD", "decimals": 4, "custom": { "fillOpacity": 20, "stacking": { "mode": "normal" } } } }
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [1d]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "currencyUSD",
+          "decimals": 4,
+          "custom": {
+            "fillOpacity": 20,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "table",
+      "title": "User Summary",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "instant": true
+        },
+        {
+          "expr": "sum by (user_email) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "B",
+          "instant": true
+        },
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [$__auto]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "C",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "user_email": "User",
+              "Value #A": "API Requests",
+              "Value #B": "Cost (USD)",
+              "Value #C": "Prompts"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "Cost (USD)",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Cost (USD)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "currencyUSD"
+              },
+              {
+                "id": "decimals",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "row",
+      "title": "AI Utilization — AI利活用の絶対量",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "1-1: Sessions by User",
+      "description": "ユーザー別セッション数の推移（session_idのユニーク数）",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 23
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "count without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "1-2: Prompts by User",
+      "description": "ユーザー別プロンプト送信数の推移",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 23
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "1-6: Avg Prompts per Session",
+      "description": "ユーザー別セッション当たり平均プロンプト数（利用深度の指標）",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "avg without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 10
+          }
+        }
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "2-4: Sub-agent (Task) Usage by User",
+      "description": "ユーザー別サブエージェント利用回数の推移（tool_name=Task）",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 31
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Task` [1d]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "barchart",
+      "title": "1-4: Skill Usage Ranking",
+      "description": "Skill名別の利用回数ランキング（tool_parametersからskill_nameを抽出）",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 39
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sort_desc(topk(15, sum by (skill_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Skill` | line_format `{{.tool_parameters}}` | json | __error__=`` [$__auto]))))",
+          "legendFormat": "{{skill_name}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "options": {
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "type": "barchart",
+      "title": "1-5: MCP Tool Usage Ranking",
+      "description": "MCPツール名別の利用回数ランキング（tool_parametersからmcp_tool_nameを抽出）",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sort_desc(topk(15, sum by (mcp_tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | line_format `{{.tool_parameters}}` | json | __error__=`` [$__auto]))))",
+          "legendFormat": "{{mcp_tool_name}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "options": {
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "type": "row",
+      "title": "Best Practices — ベストプラクティス遵守",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 47
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "2-2: Personal Skill Usage by User",
+      "description": "個人作成スキル（gp-toolkit以外）のユーザー別利用推移",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Skill` | line_format `{{.tool_parameters}}` | json | skill_name!~`gp-toolkit:.*` | __error__=`` [1d]))",
+          "legendFormat": "{{user_email}}",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "stacking": {
+              "mode": "normal"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "barchart",
+      "title": "2-3: Provided Skill (gp-toolkit) Usage",
+      "description": "提供スキル（gp-toolkit:*）のSkill別利用回数",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sort_desc(topk(15, sum by (skill_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Skill` | line_format `{{.tool_parameters}}` | json | skill_name=~`gp-toolkit:.*` | __error__=`` [$__auto]))))",
+          "legendFormat": "{{skill_name}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "options": {
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "type": "timeseries",
+      "title": "2-1: Max Prompts per Session",
+      "description": "ユーザー別セッション当たり最大プロンプト数（セッション分割の適切さ判定。値が大きいユーザーは1セッションに詰め込みすぎの可能性）",
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "max without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
+          "legendFormat": "{{user_email}} (max)",
+          "refId": "A",
+          "step": "1d"
+        },
+        {
+          "expr": "avg without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
+          "legendFormat": "{{user_email}} (avg)",
+          "refId": "B",
+          "step": "1d"
+        }
+      ],
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "fillOpacity": 5
+          }
+        }
+      }
     },
     {
       "type": "row",
       "title": "Cost & Tokens",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 14 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
       "collapsed": false
     },
     {
       "type": "piechart",
       "title": "Cost by Model",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 15 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum by (model) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
-        "legendFormat": "{{model}}",
-        "refId": "A"
-      }],
-      "options": { "legend": { "displayMode": "table", "placement": "right", "values": ["value", "percent"] } }
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 65
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (model) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [$__auto]))",
+          "legendFormat": "{{model}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        }
+      }
     },
     {
       "type": "timeseries",
       "title": "Token Usage",
-      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 15 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 65
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
       "targets": [
         {
-          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap input_tokens [$__auto]))",
+          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap input_tokens [1d]))",
           "legendFormat": "Input Tokens",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
-          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap output_tokens [$__auto]))",
+          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap output_tokens [1d]))",
           "legendFormat": "Output Tokens",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         },
         {
-          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cache_read_tokens [$__auto]))",
+          "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cache_read_tokens [1d]))",
           "legendFormat": "Cache Read",
-          "refId": "C"
+          "refId": "C",
+          "step": "1d"
         }
       ],
-      "options": { "tooltip": { "mode": "multi" } },
-      "fieldConfig": { "defaults": { "unit": "short", "custom": { "fillOpacity": 10 } } }
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "fillOpacity": 10
+          }
+        }
+      }
     },
     {
       "type": "piechart",
       "title": "Speed Mode (Fast / Normal)",
-      "gridPos": { "h": 8, "w": 8, "x": 0, "y": 23 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum by (speed) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
-        "legendFormat": "{{speed}}",
-        "refId": "A"
-      }],
-      "options": { "legend": { "displayMode": "table", "placement": "right", "values": ["value", "percent"] } }
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 73
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (speed) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [$__auto]))",
+          "legendFormat": "{{speed}}",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "legend": {
+          "displayMode": "table",
+          "placement": "right",
+          "values": [
+            "value",
+            "percent"
+          ]
+        }
+      }
     },
     {
       "type": "timeseries",
       "title": "API Response Duration",
-      "gridPos": { "h": 8, "w": 16, "x": 8, "y": 23 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 73
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
       "targets": [
         {
-          "expr": "avg(avg_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [$__auto]))",
+          "expr": "avg(avg_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [1d]))",
           "legendFormat": "Avg",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
-          "expr": "max(max_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [$__auto]))",
+          "expr": "max(max_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [1d]))",
           "legendFormat": "Max",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
-      "options": { "tooltip": { "mode": "multi" } },
+      "options": {
+        "tooltip": {
+          "mode": "multi"
+        }
+      },
       "fieldConfig": {
-        "defaults": { "unit": "ms", "custom": { "fillOpacity": 5 } },
+        "defaults": {
+          "unit": "ms",
+          "custom": {
+            "fillOpacity": 5
+          }
+        },
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Avg" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "Max" }, "properties": [{ "id": "color", "value": { "fixedColor": "orange", "mode": "fixed" } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
         ]
       }
     },
     {
       "type": "row",
       "title": "Tool Usage",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 31 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 81
+      },
       "collapsed": false
     },
     {
       "type": "barchart",
       "title": "Top Tools by Usage",
-      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 32 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "topk(15, sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` [$__auto])))",
-        "legendFormat": "{{tool_name}}",
-        "refId": "A",
-        "instant": true
-      }],
-      "options": { "orientation": "horizontal" }
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 82
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sort_desc(topk(15, sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` [$__auto]))))",
+          "legendFormat": "{{tool_name}}",
+          "refId": "A",
+          "instant": true
+        }
+      ],
+      "options": {
+        "orientation": "horizontal"
+      }
     },
     {
       "type": "timeseries",
       "title": "Tool Decisions (Accept / Reject)",
-      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 32 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 82
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
       "targets": [
         {
-          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`accept` [$__auto]))",
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`accept` [1d]))",
           "legendFormat": "Accept",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
-          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [$__auto]))",
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [1d]))",
           "legendFormat": "Reject",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
       "fieldConfig": {
         "overrides": [
-          { "matcher": { "id": "byName", "options": "Accept" }, "properties": [{ "id": "color", "value": { "fixedColor": "green", "mode": "fixed" } }] },
-          { "matcher": { "id": "byName", "options": "Reject" }, "properties": [{ "id": "color", "value": { "fixedColor": "red", "mode": "fixed" } }] }
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Accept"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Reject"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
         ]
       }
     },
     {
       "type": "row",
+      "title": "Harness Quality — ハーネスの改善",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 90
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "3-1: MCP Tool Errors",
+      "description": "MCPツールの成功/失敗の推移",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 91
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | success=`true` [1d]))",
+          "legendFormat": "Success",
+          "refId": "A",
+          "step": "1d"
+        },
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | success=`false` [1d]))",
+          "legendFormat": "Failure",
+          "refId": "B",
+          "step": "1d"
+        }
+      ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Success"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Failure"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "type": "table",
+      "title": "3-1: MCP Tool Error Rate",
+      "description": "MCPツール別のエラー率",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 91
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (mcp_tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | line_format `{{.tool_parameters}}` | json | __error__=`` [$__auto]))",
+          "legendFormat": "{{mcp_tool_name}}",
+          "refId": "A",
+          "instant": true
+        },
+        {
+          "expr": "sum by (mcp_tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | success=`false` | line_format `{{.tool_parameters}}` | json | __error__=`` [$__auto]))",
+          "legendFormat": "{{mcp_tool_name}}",
+          "refId": "B",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "mcp_tool_name": "MCP Tool",
+              "Value #A": "Total",
+              "Value #B": "Errors"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "Errors",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "3-2: Tool Rejection Rate",
+      "description": "ツール別の承認/拒否推移",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 99
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [1d]))",
+          "legendFormat": "{{tool_name}} reject",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "custom": {
+            "fillOpacity": 30
+          }
+        }
+      }
+    },
+    {
+      "type": "table",
+      "title": "3-2: Rejection Rate by Tool",
+      "description": "ツール別の拒否率テーブル",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 99
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` [$__auto]))",
+          "legendFormat": "{{tool_name}}",
+          "refId": "A",
+          "instant": true
+        },
+        {
+          "expr": "sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [$__auto]))",
+          "legendFormat": "{{tool_name}}",
+          "refId": "B",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "renameByName": {
+              "tool_name": "Tool",
+              "Value #A": "Total Decisions",
+              "Value #B": "Rejections"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "Rejections",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
       "title": "Errors",
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 40 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 107
+      },
       "collapsed": false
     },
     {
       "type": "timeseries",
       "title": "API Errors Over Time",
-      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 41 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_error` [$__auto]))",
-        "legendFormat": "Errors",
-        "refId": "A"
-      }],
-      "fieldConfig": { "defaults": { "color": { "fixedColor": "red", "mode": "fixed" }, "custom": { "fillOpacity": 30 } } }
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 108
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_error` [1d]))",
+          "legendFormat": "Errors",
+          "refId": "A",
+          "step": "1d"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "red",
+            "mode": "fixed"
+          },
+          "custom": {
+            "fillOpacity": 30
+          }
+        }
+      }
     },
     {
       "type": "logs",
       "title": "Recent Errors",
-      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 41 },
-      "datasource": { "type": "loki", "uid": "${logsDs}" },
-      "targets": [{
-        "expr": "{service_name=\"cowork\"} | event_name=`api_error`",
-        "refId": "A"
-      }],
-      "options": { "showTime": true, "showLabels": false, "showCommonLabels": false, "wrapLogMessage": true, "enableLogDetails": true, "sortOrder": "Descending" }
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 108
+      },
+      "datasource": {
+        "type": "loki",
+        "uid": "${logsDs}"
+      },
+      "targets": [
+        {
+          "expr": "{service_name=\"cowork\"} | event_name=`api_error`",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "showTime": true,
+        "showLabels": false,
+        "showCommonLabels": false,
+        "wrapLogMessage": true,
+        "enableLogDetails": true,
+        "sortOrder": "Descending"
+      }
     }
   ],
   "templating": {
