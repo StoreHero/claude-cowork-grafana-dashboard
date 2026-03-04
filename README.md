@@ -10,8 +10,11 @@ Cowork sends telemetry events to Grafana Cloud (Loki) through its built-in OTLP 
 
 - **Overview** — Total API requests, cost (USD), prompt count, error count
 - **User Activity** — Per-user API request and cost trends (grouped by `user_email`)
+- **AI Utilization** — Sessions per user, prompts per user, avg prompts per session, Skill/MCP tool usage ranking, sub-agent usage
+- **Best Practices** — Session split appropriateness (max vs avg prompts), personal skill growth, provided Skill adoption rate
 - **Cost & Tokens** — Cost breakdown by model, token usage (input/output/cache), speed mode distribution, API response duration (avg/max)
 - **Tool Usage** — Top tools ranking, tool accept/reject decisions
+- **Harness Quality** — MCP tool error rate, tool rejection rate, provided Skill utilization
 - **Errors** — Error count timeline and recent error log viewer
 
 ## Prerequisites
