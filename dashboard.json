@@ -257,10 +257,11 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "fillOpacity": 20,
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
-            }
+              "mode": "none"
+            },
+            "drawStyle": "line"
           }
         }
       }
@@ -296,10 +297,11 @@
           "unit": "currencyUSD",
           "decimals": 4,
           "custom": {
-            "fillOpacity": 20,
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
-            }
+              "mode": "none"
+            },
+            "drawStyle": "line"
           }
         }
       }
@@ -430,10 +432,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 80,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
+              "mode": "none"
             }
           }
         }
@@ -469,10 +471,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 80,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
+              "mode": "none"
             }
           }
         }
@@ -543,10 +545,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 80,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
+              "mode": "none"
             }
           }
         }
@@ -645,10 +647,10 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "drawStyle": "bars",
-            "fillOpacity": 80,
+            "drawStyle": "line",
+            "fillOpacity": 10,
             "stacking": {
-              "mode": "normal"
+              "mode": "none"
             }
           }
         }
