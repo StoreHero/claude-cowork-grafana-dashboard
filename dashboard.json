@@ -245,7 +245,8 @@
         {
           "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`api_request` [1d]))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -281,7 +282,8 @@
         {
           "expr": "sum by (user_email) (sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cost_usd [1d]))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -416,7 +418,8 @@
         {
           "expr": "count without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -454,7 +457,8 @@
         {
           "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d]))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -492,7 +496,8 @@
         {
           "expr": "avg without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -526,7 +531,8 @@
         {
           "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Task` [1d]))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -627,7 +633,8 @@
         {
           "expr": "sum by (user_email) (count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`Skill` | line_format `{{.tool_parameters}}` | json | skill_name!~`gp-toolkit:.*` | __error__=`` [1d]))",
           "legendFormat": "{{user_email}}",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "options": {
@@ -691,12 +698,14 @@
         {
           "expr": "max without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
           "legendFormat": "{{user_email}} (max)",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
           "expr": "avg without (session_id) (sum by (session_id, user_email) (count_over_time({service_name=\"cowork\"} | event_name=`user_prompt` [1d])))",
           "legendFormat": "{{user_email}} (avg)",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
       "options": {
@@ -771,17 +780,20 @@
         {
           "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap input_tokens [1d]))",
           "legendFormat": "Input Tokens",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
           "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap output_tokens [1d]))",
           "legendFormat": "Output Tokens",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         },
         {
           "expr": "sum(sum_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap cache_read_tokens [1d]))",
           "legendFormat": "Cache Read",
-          "refId": "C"
+          "refId": "C",
+          "step": "1d"
         }
       ],
       "options": {
@@ -846,12 +858,14 @@
         {
           "expr": "avg(avg_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [1d]))",
           "legendFormat": "Avg",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
           "expr": "max(max_over_time({service_name=\"cowork\"} | event_name=`api_request` | unwrap duration_ms [1d]))",
           "legendFormat": "Max",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
       "options": {
@@ -953,12 +967,14 @@
         {
           "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`accept` [1d]))",
           "legendFormat": "Accept",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
           "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [1d]))",
           "legendFormat": "Reject",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
       "fieldConfig": {
@@ -1025,12 +1041,14 @@
         {
           "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | success=`true` [1d]))",
           "legendFormat": "Success",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         },
         {
           "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`tool_result` | tool_name=`mcp_tool` | success=`false` [1d]))",
           "legendFormat": "Failure",
-          "refId": "B"
+          "refId": "B",
+          "step": "1d"
         }
       ],
       "fieldConfig": {
@@ -1145,7 +1163,8 @@
         {
           "expr": "sum by (tool_name) (count_over_time({service_name=\"cowork\"} | event_name=`tool_decision` | decision=`reject` [1d]))",
           "legendFormat": "{{tool_name}} reject",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "fieldConfig": {
@@ -1247,7 +1266,8 @@
         {
           "expr": "sum(count_over_time({service_name=\"cowork\"} | event_name=`api_error` [1d]))",
           "legendFormat": "Errors",
-          "refId": "A"
+          "refId": "A",
+          "step": "1d"
         }
       ],
       "fieldConfig": {
